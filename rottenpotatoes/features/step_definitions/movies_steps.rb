@@ -23,3 +23,19 @@ Then /I should see all the movies/ do
     step %{I should see "#{movie.title}"}
   end
 end
+
+Then /the director of "(.*)" should be "(.*)"/ do |movie_title, movie_director|
+  details = page.find("#details")
+  expect(details.all("li")[2].text).to include(movie_director)
+end
+
+Then /'(.*)' should have no director info/ do |movie_title|
+  movies_table = page.find("#movies")
+  movies_table.find("tbody").all("tr").each do |row|
+    title = row.all("td")[0].text
+    if title == movie_title
+      director = row.all("td")[2].text
+      expect(director).to eq("")
+    end
+  end
+end
