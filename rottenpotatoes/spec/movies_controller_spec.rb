@@ -55,4 +55,32 @@ RSpec.describe MoviesController, :type => :controller do
     end
   end
 
+  describe "POST a new movie" do
+    it "redirects to the index page" do
+      Movie.delete_all
+      post :create, :movie => {:id => 1, :title => "movie1", :rating => "R", :director => "director1"}
+      expect(response).to redirect_to movies_path
+    end
+  end
+
+  describe "PUT an existing movie" do
+    it "redirects to the show page" do
+      Movie.delete_all
+      movie1 = { :id => 1, :title => "movie1", :rating => "R", :director => "director1" }
+      Movie.create(movie1)
+      post :update, :id => 1, :movie => {:id => 1, :title => "movie1_updated", :rating => "R", :director => "director1"}
+      expect(response).to redirect_to movie_path(1)
+    end
+  end
+
+  describe "DELETE an existing movie" do
+    it "redirects to the index page" do
+      Movie.delete_all
+      movie1 = { :id => 1, :title => "movie1", :rating => "R", :director => "director1" }
+      Movie.create(movie1)
+      delete :destroy, :id => 1
+      expect(response).to redirect_to movies_path
+    end
+  end
+
 end
