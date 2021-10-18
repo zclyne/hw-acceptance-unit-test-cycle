@@ -8,7 +8,6 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-    puts @movies[0].title
   end
 
   def new

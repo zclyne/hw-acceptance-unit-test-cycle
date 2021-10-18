@@ -16,10 +16,10 @@ if RUBY_VERSION>='2.6.0'
 end
 
 RSpec.describe DirectorsController, :type => :controller do
-  Movie.delete_all
 
   describe "GET search a movie with a director" do
     it "returns the similar movies" do
+      Movie.delete_all
       # create a movie with director
       movie = { :id => 1, :title => "movie with director", :rating => "R", :director => "director1" }
       Movie.create(movie)
@@ -30,10 +30,12 @@ RSpec.describe DirectorsController, :type => :controller do
   end
   describe "GET search a movie without a director" do
     it "renders the index page" do
+      Movie.delete_all
       movie = { :id => 2, :title => "movie without director", :rating => "R" }
       Movie.create(movie)
       get :search, :movie_id => 2
       expect(response).to redirect_to "/movies"
     end
   end
+
 end
